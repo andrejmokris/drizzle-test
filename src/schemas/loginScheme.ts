@@ -1,16 +1,14 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const loginScheme = z.object({
   body: z.object({
-    fullName: z.string({
-      required_error: "Full name is required",
-    }),
     email: z
       .string({
-        required_error: "Email is required",
+        required_error: 'Email is required'
       })
-      .email("Not a valid email"),
-  }),
+      .email('Not a valid email'),
+    password: z.string({ required_error: 'Password is required' })
+  })
 });
 
 export default loginScheme;

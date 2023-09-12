@@ -1,18 +1,14 @@
-import { NextFunction, Response, Request } from "express";
-import { AnyZodObject, ZodError } from "zod";
+import { Request, Response, NextFunction } from 'express';
+import { AnyZodObject } from 'zod';
+import { ValidationError } from '../utils/errors'; // Import your custom ValidationError class
 
-export const validate =
-  (schema: AnyZodObject) =>
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      await schema.parseAsync({
-        body: req.body,
-      });
-      return next();
-    } catch (error) {
-      if (error instanceof ZodError) {
-        return res.status(400).json(error.issues);
-      }
-      return res.status(400).send('Error occured');
-    }
-  };
+export const validate = (schema: AnyZodObject) => async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await schema.parseAsync({
+      body: req.body
+    });
+    next(); // Continue to the next middleware or route handler
+  } catch (error) {
+    next(new ValidationError('Validation error')); // Pass the error to the error handling middleware
+  }
+};

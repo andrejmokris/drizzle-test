@@ -1,14 +1,13 @@
 // routes/usersRoutes.ts
-import { Router } from "express";
+import { Router } from 'express';
 import * as postController from '../controllers/postController';
-import { validate } from "../middleware/schemaMiddleware";
-import loginScheme from "../schemas/loginScheme";
+import authMiddleware from '../middleware/authMiddleware';
 
-const router = Router();
+const postsRouter = Router();
 
-// router.use(authMiddleware);
+postsRouter.use(authMiddleware);
 
-router.get("/", validate(loginScheme) ,postController.getPosts);
-router.get("/:id", postController.getPostById);
+postsRouter.get('/', postController.getPosts);
+postsRouter.get('/:id', postController.getPostById);
 
-export default router;
+export default postsRouter;

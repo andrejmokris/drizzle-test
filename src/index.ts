@@ -1,7 +1,7 @@
-import express from "express";
-import usersRoutes from "./routes/usersRoutes";
-import postRoutes from "./routes/postsRoutes";
-import errorMiddleware from "./middleware/errorMiddeware";
+import express from 'express';
+import router from './routes/usersRoutes';
+import postsRouter from './routes/postsRoutes';
+import errorMiddleware from './middleware/errorMiddleware';
 
 const app = express();
 const port = 3000;
@@ -9,8 +9,9 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/users", usersRoutes);
-app.use("/api/posts", postRoutes);
+// Use your routes
+app.use('/api/users', router);
+app.use('/api/posts', postsRouter);
 
 app.use(errorMiddleware);
 
